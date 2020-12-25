@@ -6,7 +6,6 @@ namespace FileContentSearch.ViewModel
     using System.Diagnostics;
     using System.IO;
     using System.Media;
-    using System.Reflection;
     using System.Text;
     using System.Windows;
     using System.Windows.Data;
@@ -87,7 +86,7 @@ namespace FileContentSearch.ViewModel
 
         public ResultViewModel SelectedResult { get; set; }
 
-        public static string Title => IsDebugSession() == true ? "File-Content-Search (DEBUG)" : $"File-Content-Search {Assembly.GetExecutingAssembly().GetName().Version}";
+        public static string Title => IsDebugSession() == true ? "File-Content-Search (DEBUG)" : $"File-Content-Search {System.Windows.Forms.Application.ProductVersion}";
 
         public void SearchSettingsChanged() => this.OnPropertyChanged(nameof(this.SearchSettings));
 
