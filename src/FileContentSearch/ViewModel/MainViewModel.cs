@@ -86,7 +86,7 @@ namespace FileContentSearch.ViewModel
 
         public ResultViewModel SelectedResult { get; set; }
 
-        public static string Title => IsDebugSession() == true ? "File-Content-Search (DEBUG)" : $"File-Content-Search {System.Windows.Forms.Application.ProductVersion}";
+        public static string Title => WindowTitleService.GetMainWindowTitle();
 
         public void SearchSettingsChanged() => this.OnPropertyChanged(nameof(this.SearchSettings));
 
@@ -271,15 +271,6 @@ namespace FileContentSearch.ViewModel
             }
 
             this.AppStateViewModel.IncrementProgress(fileCount);
-        }
-
-        private static bool IsDebugSession()
-        {
-#if DEBUG
-            return true;
-#else
-            return false;
-#endif
         }
     }
 }
