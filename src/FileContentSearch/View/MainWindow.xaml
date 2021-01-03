@@ -9,7 +9,7 @@
         Title="{Binding Title}"
         MinWidth="600"
         MinHeight="300"
-        d:DataContext="{d:DesignInstance viewModel:MainViewModel,
+        d:DataContext="{d:DesignInstance d:Type=viewModel:MainViewModel,
                                          IsDesignTimeCreatable=True}"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="FileContentSearch"
