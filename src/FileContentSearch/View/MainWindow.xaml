@@ -7,8 +7,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:FileContentSearch.ViewModel"
         Title="{Binding Title}"
-        MinWidth="600"
-        MinHeight="300"
+        MinWidth="800"
+        MinHeight="600"
         d:DataContext="{d:DesignInstance d:Type=viewModel:MainViewModel,
                                          IsDesignTimeCreatable=True}"
         lex:LocalizeDictionary.DesignCulture="en"
@@ -27,43 +27,60 @@
         <converter:IntPercentageToDoubleConverter x:Key="IntPercentageToDoubleConverter" />
         <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 
-        <Style x:Key="LabelTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Margin" Value="8,4,4,4" />
+        <Style x:Key="LabelTextBlockStyle"
+               TargetType="TextBlock">
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Margin"
+                    Value="8,4,4,4" />
         </Style>
 
-        <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Margin" Value="4" />
-            <Setter Property="Height" Value="20" />
+        <Style x:Key="InputTextBoxStyle"
+               TargetType="TextBox">
+            <Setter Property="Margin"
+                    Value="4" />
+            <Setter Property="Height"
+                    Value="20" />
         </Style>
 
-        <Style x:Key="SmallButtonBase" TargetType="Button">
-            <Setter Property="Margin" Value="4" />
-            <Setter Property="Width" Value="23" />
+        <Style x:Key="SmallButtonBase"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="4" />
+            <Setter Property="Width"
+                    Value="23" />
         </Style>
 
         <Style x:Key="ClearButtonStyle"
                BasedOn="{StaticResource SmallButtonBase}"
                TargetType="Button">
-            <Setter Property="Content" Value="X" />
+            <Setter Property="Content"
+                    Value="X" />
         </Style>
 
         <Style x:Key="OpenButtonStyle"
                BasedOn="{StaticResource SmallButtonBase}"
                TargetType="Button">
-            <Setter Property="Content" Value="&gt;" />
+            <Setter Property="Content"
+                    Value="&gt;" />
         </Style>
 
-        <Style x:Key="NormalButtonStyle" TargetType="Button">
-            <Setter Property="Margin" Value="4" />
-            <Setter Property="Width" Value="150" />
+        <Style x:Key="NormalButtonStyle"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="4" />
+            <Setter Property="Width"
+                    Value="150" />
         </Style>
 
-        <Style x:Key="NormalCheckBoxStyle" TargetType="CheckBox">
-            <Setter Property="Margin" Value="4" />
+        <Style x:Key="NormalCheckBoxStyle"
+               TargetType="CheckBox">
+            <Setter Property="Margin"
+                    Value="4" />
         </Style>
 
-        <Style x:Key="NormalDataGridCellStyle" TargetType="{x:Type DataGridCell}">
+        <Style x:Key="NormalDataGridCellStyle"
+               TargetType="{x:Type DataGridCell}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -77,7 +94,8 @@
     </Window.Resources>
 
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding Mode=OneWay, Path=AppStateViewModel.Progress, UpdateSourceTrigger=PropertyChanged}" />
+        <TaskbarItemInfo ProgressState="Normal"
+                         ProgressValue="{Binding Mode=OneWay, Path=AppStateViewModel.Progress, UpdateSourceTrigger=PropertyChanged}" />
     </Window.TaskbarItemInfo>
 
     <!--<Window.TaskbarItemInfo>
@@ -149,7 +167,8 @@
                      Style="{StaticResource InputTextBoxStyle}"
                      Text="{Binding SearchSettings.SearchText1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding StartStopSearchCommand}" />
+                    <KeyBinding Key="Return"
+                                Command="{Binding StartStopSearchCommand}" />
                 </TextBox.InputBindings>
             </TextBox>
             <TextBox Grid.Row="1"
@@ -157,7 +176,8 @@
                      Style="{StaticResource InputTextBoxStyle}"
                      Text="{Binding SearchSettings.SearchText2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding StartStopSearchCommand}" />
+                    <KeyBinding Key="Return"
+                                Command="{Binding StartStopSearchCommand}" />
                 </TextBox.InputBindings>
             </TextBox>
             <Button Grid.Row="1"
@@ -187,11 +207,15 @@
                           IsChecked="{Binding SearchSettings.ExcludSubdirectoryNames, Mode=TwoWay}">
                 <ToggleButton.Style>
                     <Style TargetType="{x:Type ToggleButton}">
-                        <Setter Property="Content" Value="{Binding Source={lex:Loc AllFolders}}" />
+                        <Setter Property="Content"
+                                Value="{Binding Source={lex:Loc AllFolders}}" />
                         <Style.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Content" Value="{Binding Source={lex:Loc ExcludeFolder}}" />
-                                <Setter Property="Foreground" Value="OrangeRed" />
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter Property="Content"
+                                        Value="{Binding Source={lex:Loc ExcludeFolder}}" />
+                                <Setter Property="Foreground"
+                                        Value="OrangeRed" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -212,6 +236,11 @@
                     HorizontalAlignment="Left"
                     Command="{Binding ClearExcludedSubdirectoryNamesCommand}"
                     Style="{StaticResource ClearButtonStyle}" />
+            <ProgressBar Grid.Row="3"
+                         Grid.Column="4"
+                         Margin="4"
+                         IsIndeterminate="{Binding AppStateViewModel.IsBusy}"
+                         Visibility="{Binding AppStateViewModel.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <!--  Row 4 - FileTypes  -->
             <ToggleButton Grid.Row="4"
@@ -222,11 +251,15 @@
                           IsChecked="{Binding SearchSettings.CheckAllFiles, Mode=TwoWay}">
                 <ToggleButton.Style>
                     <Style TargetType="{x:Type ToggleButton}">
-                        <Setter Property="Content" Value="{Binding Source={lex:Loc FileTypes}}" />
+                        <Setter Property="Content"
+                                Value="{Binding Source={lex:Loc FileTypes}}" />
                         <Style.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Content" Value="{Binding Source={lex:Loc AllFileTypes}}" />
-                                <Setter Property="Foreground" Value="OrangeRed" />
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter Property="Content"
+                                        Value="{Binding Source={lex:Loc AllFileTypes}}" />
+                                <Setter Property="Foreground"
+                                        Value="OrangeRed" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -271,7 +304,8 @@
                   SelectedItem="{Binding SelectedResult}"
                   SelectionMode="Single">
             <DataGrid.InputBindings>
-                <MouseBinding Command="{Binding OpenSelectedResultCommand}" Gesture="LeftDoubleClick" />
+                <MouseBinding Command="{Binding OpenSelectedResultCommand}"
+                              Gesture="LeftDoubleClick" />
             </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="Auto"
@@ -326,7 +360,8 @@
             </StatusBarItem>
 
             <StatusBarItem Grid.Column="1">
-                <TextBlock Margin="8,0,0,0" Text="{Binding AppStateViewModel.FileCountStatus}" />
+                <TextBlock Margin="8,0,0,0"
+                           Text="{Binding AppStateViewModel.FileCountStatus}" />
             </StatusBarItem>
 
         </StatusBar>

@@ -9,10 +9,9 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double res = 0.0d;
-            if (value is int)
+            var res = 0.0d;
+            if (value is int intVal)
             {
-                int intVal = (int)value;
                 res = intVal / 100.0d;
 
                 if (res < 0.0d)

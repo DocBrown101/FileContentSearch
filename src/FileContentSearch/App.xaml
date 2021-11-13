@@ -10,6 +10,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

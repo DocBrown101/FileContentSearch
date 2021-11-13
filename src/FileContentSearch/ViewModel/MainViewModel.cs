@@ -192,39 +192,34 @@ namespace FileContentSearch.ViewModel
 
             this.Results.Clear();
 
-            try
+            var searchFiles = this.fileSearchCacheService.CanCachedFilesBeUsed(fileContentSearchOptions)
+                                  ? new List<string>(this.fileSearchCacheService.Files)
+                                  : await this.fileSearchService.LoadFilesForSearch(fileContentSearchOptions, cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
             {
-                var searchFiles = this.fileSearchCacheService.CanCachedFilesBeUsed(fileContentSearchOptions)
-                                      ? new List<string>(this.fileSearchCacheService.Files)
-                                      : await this.fileSearchService.LoadFilesForSearch(fileContentSearchOptions, cancellationToken);
-
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    this.AppStateViewModel.UpdateFileCountStatus(0, 0);
-                    return;
-                }
-
-                this.fileSearchCacheService.SetCache(searchFiles, fileContentSearchOptions);
-
-                await this.fileContentSearchService.StartSearch(searchFiles, fileContentSearchOptions, cancellationToken);
-
-                if (this.Results.Count == 0)
-                {
-                    this.AppStateViewModel.UpdateFileCountStatus(0, searchFiles.Count);
-                    MessageBox.Show("NoMatchFound".GetLocalizedValue());
-                }
-                else
-                {
-                    if (this.ResultsCollectionView != null && this.ResultsCollectionView.CanSort == true)
-                    {
-                        this.ResultsCollectionView.SortDescriptions.Clear();
-                        this.ResultsCollectionView.SortDescriptions.Add(new SortDescription("Result.ResultFilePath", ListSortDirection.Ascending));
-                    }
-                }
+                this.AppStateViewModel.UpdateFileCountStatus(0, 0);
+                return;
             }
-            finally
+
+            this.fileSearchCacheService.SetCache(searchFiles, fileContentSearchOptions);
+
+            await this.fileContentSearchService.StartSearch(searchFiles, fileContentSearchOptions, cancellationToken);
+
+            this.appState.Idle();
+
+            if (this.Results.Count == 0)
             {
-                this.appState.Idle();
+                this.AppStateViewModel.UpdateFileCountStatus(0, searchFiles.Count);
+                MessageBox.Show("NoMatchFound".GetLocalizedValue());
+            }
+            else
+            {
+                if (this.ResultsCollectionView != null && this.ResultsCollectionView.CanSort == true)
+                {
+                    this.ResultsCollectionView.SortDescriptions.Clear();
+                    this.ResultsCollectionView.SortDescriptions.Add(new SortDescription("Result.ResultFilePath", ListSortDirection.Ascending));
+                }
             }
         }
 

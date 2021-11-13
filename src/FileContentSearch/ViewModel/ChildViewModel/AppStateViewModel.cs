@@ -15,6 +15,7 @@
 
         private int searchProgressValue;
         private string fileCountStatus;
+        private bool isBusy;
         private double progress;
 
         public AppStateViewModel(AppState appState)
@@ -35,6 +36,12 @@
         {
             get => this.commandTextColor;
             private set => this.Set(ref this.commandTextColor, value);
+        }
+
+        public bool IsBusy
+        {
+            get => this.isBusy;
+            private set => this.Set(ref this.isBusy, value);
         }
 
         public double Progress
@@ -70,6 +77,7 @@
 
                         this.searchProgressValue = 0;
                         this.Progress = 0;
+                        this.IsBusy = false;
                     }
 
                     break;
@@ -80,6 +88,7 @@
 
                         this.searchProgressValue = 0;
                         this.Progress = 0;
+                        this.IsBusy = true;
                     }
 
                     break;
