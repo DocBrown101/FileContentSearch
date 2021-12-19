@@ -30,6 +30,11 @@
                                 {
                                     var allFiles = this.GetAllFiles(fileContentSearchOptions.SearchPath, fileContentSearchOptions.ExcludedSubdirectoryNames, cancellationToken);
 
+                                    if (cancellationToken.IsCancellationRequested)
+                                    {
+                                        return null;
+                                    }
+
                                     return fileContentSearchOptions.FileExtensions.Any()
                                         ? allFiles.Where(file => fileContentSearchOptions.FileExtensions.Any(file.ToLower().EndsWith)).ToList()
                                         : allFiles;

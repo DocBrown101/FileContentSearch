@@ -198,6 +198,7 @@ namespace FileContentSearch.ViewModel
 
             if (cancellationToken.IsCancellationRequested)
             {
+                this.appState.Idle();
                 this.AppStateViewModel.UpdateFileCountStatus(0, 0);
                 return;
             }
