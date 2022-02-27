@@ -19,6 +19,7 @@
 
             this.FileName = fileInfo.Name;
             this.FileFullName = fileInfo.FullName;
+            this.FileExtension = fileInfo.Extension;
             this.CreationTime = fileInfo.CreationTime;
             this.LastWriteTime = fileInfo.LastWriteTime;
             this.ResultFileName = this.GetResultFileName();
@@ -32,6 +33,8 @@
         public string FileName { get; }
 
         public string FileFullName { get; }
+
+        public string FileExtension { get; }
 
         public DateTime CreationTime { get; }
 
