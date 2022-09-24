@@ -66,7 +66,7 @@
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        return null;
+                        return new List<string>();
                     }
 
                     var currentFolderName = Path.GetFileName(folder);

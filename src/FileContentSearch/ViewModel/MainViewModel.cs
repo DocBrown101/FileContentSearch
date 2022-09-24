@@ -7,6 +7,7 @@ namespace FileContentSearch.ViewModel
     using System.IO;
     using System.Media;
     using System.Text;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
@@ -160,7 +161,7 @@ namespace FileContentSearch.ViewModel
             switch (this.appState.CurrentState)
             {
                 case AppState.State.Idle:
-                    this.StartOperationsAsync();
+                    _ = this.StartOperationsAsync();
                     break;
                 case AppState.State.Running:
                     this.appState.Abort();
@@ -168,7 +169,7 @@ namespace FileContentSearch.ViewModel
             }
         }
 
-        private async void StartOperationsAsync()
+        private async Task StartOperationsAsync()
         {
             var fileContentSearchOptions = new FileContentSearchOptions(
                 this.localizationService,

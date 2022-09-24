@@ -7,6 +7,8 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>App.ico</ApplicationIcon>
         <NeutralLanguage>en</NeutralLanguage>
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     </PropertyGroup>
 
     <ItemGroup>
