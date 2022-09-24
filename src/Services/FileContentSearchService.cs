@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,16 +23,21 @@
 
         public async Task StartSearch(IReadOnlyList<string> files, FileContentSearchOptions searchOptions, CancellationToken cancellationToken)
         {
-            await Task.Run(
-                () =>
-                    {
-                        var fileCount = files.Count;
+            var options = new ParallelOptions() { CancellationToken = cancellationToken };
 
-                        Parallel.ForEach(
-                            files.TakeWhile(t => !cancellationToken.IsCancellationRequested),
-                            searchFile => this.SearchText(searchFile, fileCount, searchOptions, cancellationToken));
-                    },
-                cancellationToken);
+            try
+            {
+                await Parallel.ForEachAsync(files, options, (searchFile, ct) =>
+                {
+                    this.SearchText(searchFile, files.Count, searchOptions, ct);
+
+                    return ct.IsCancellationRequested ? ValueTask.FromCanceled(ct) : ValueTask.CompletedTask;
+                }).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void SearchText(string searchFile, int fileCount, FileContentSearchOptions searchOptions, CancellationToken cancellationToken)
@@ -118,11 +123,7 @@
                             }
                         }
 
-                        if (foundSearchTags.Count < searchTags.Count)
-                        {
-                            continue;
-                        }
-                        else
+                        if (foundSearchTags.Count >= searchTags.Count)
                         {
                             break;
                         }
@@ -172,7 +173,7 @@
             {
                 while (!streamReader.EndOfStream)
                 {
-                    var line = streamReader.ReadLine();
+                    _ = streamReader.ReadLine();
                 }
                 detectedEncoding = streamReader.CurrentEncoding.BodyName;
             }

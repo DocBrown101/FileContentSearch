@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="Autofac" Version="6.4.0" />
         <PackageReference Include="Jot" Version="2.1.13" />
         <PackageReference Include="WpfLocalizeExtension" Version="3.9.4" />
     </ItemGroup>
