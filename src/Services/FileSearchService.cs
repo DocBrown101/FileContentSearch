@@ -20,58 +20,53 @@
             this.context = SynchronizationContext.Current;
         }
 
-        public async Task<List<string>> LoadFilesForSearch(FileContentSearchOptions fileContentSearchOptions, CancellationToken cancellationToken)
+        public async Task<List<string>> LoadFilesForSearch(FileContentSearchOptions options, CancellationToken token)
         {
             this.NotifyFileCountChangedAction(0);
             this.lastUpdatDateTime = DateTime.Now;
 
-            var files = await Task.Run(
-                            () =>
+            var files = await Task.Run(() =>
                                 {
-                                    var allFiles = this.GetAllFiles(fileContentSearchOptions.SearchPath, fileContentSearchOptions.ExcludedSubdirectoryNames, cancellationToken);
-
-                                    if (cancellationToken.IsCancellationRequested)
-                                    {
-                                        return null;
-                                    }
-
-                                    return fileContentSearchOptions.FileExtensions.Any()
-                                        ? allFiles.Where(file => fileContentSearchOptions.FileExtensions.Any(file.ToLower().EndsWith)).ToList()
-                                        : allFiles;
+                                    return this.GetAllFilesBasedOnOptions(options, token);
                                 },
-                            cancellationToken);
+                                token).ConfigureAwait(false);
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return null;
-            }
+            if (token.IsCancellationRequested) { return null; }
 
             this.NotifyFileCountChangedAction(files.Count);
 
             return files;
         }
 
-        private List<string> GetAllFiles(string rootFolderPath, ICollection<string> excludedSubdirectoryNames, CancellationToken cancellationToken)
+        private List<string> GetAllFilesBasedOnOptions(FileContentSearchOptions options, CancellationToken token)
         {
             var allFiles = new List<string>();
             var pendingFolderPaths = new Queue<string>();
-            pendingFolderPaths.Enqueue(rootFolderPath);
+            pendingFolderPaths.Enqueue(options.SearchPath);
 
-            while (pendingFolderPaths.Count > 0 && !cancellationToken.IsCancellationRequested)
+            while (pendingFolderPaths.Count > 0 && !token.IsCancellationRequested)
             {
                 var folderPath = pendingFolderPaths.Dequeue();
-                allFiles.AddRange(Directory.EnumerateFiles(folderPath));
+
+                if (options.FileExtensions.Any())
+                {
+                    foreach (var fileExtension in options.FileExtensions)
+                    {
+                        allFiles.AddRange(Directory.EnumerateFiles(folderPath, $"*{fileExtension}"));
+                    }
+                }
+                else
+                {
+                    allFiles.AddRange(Directory.EnumerateFiles(folderPath));
+                }
 
                 foreach (var folder in Directory.EnumerateDirectories(folderPath))
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        return new List<string>();
-                    }
+                    if (token.IsCancellationRequested) { return new List<string>(); }
 
                     var currentFolderName = Path.GetFileName(folder);
 
-                    if (currentFolderName != null && excludedSubdirectoryNames.Contains(currentFolderName))
+                    if (currentFolderName != null && options.ExcludedSubdirectoryNames.Contains(currentFolderName))
                     {
                         continue;
                     }

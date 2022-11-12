@@ -32,15 +32,22 @@ namespace FileContentSearch.ViewModel
 
         private static Tracker GetTracker()
         {
+#if DEBUG
+            const string build = "DEBUG";
+#else
+            const string build = "MAIN";
+#endif
+
             var tracker = new Tracker();
 
             tracker.Configure<Window>()
-                   .Id(w => w.Name, SystemParameters.VirtualScreenWidth)
+                   .Id(w => w.Name, $"{SystemParameters.VirtualScreenWidth}.{build}")
                    .Properties(w => new { w.Top, w.Width, w.Height, w.Left, w.WindowState })
                    .PersistOn(nameof(Window.Closing))
                    .StopTrackingOn(nameof(Window.Closing));
 
             tracker.Configure<AppSettings>()
+                   .Id(w => nameof(AppSettings), build)
                    .Properties(s => new { s.SearchSettings, s.GeneralSettings })
                    .PersistOn("Exit", Application.Current)
                    .StopTrackingOn("Exit", Application.Current);

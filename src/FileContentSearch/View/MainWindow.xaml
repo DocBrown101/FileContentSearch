@@ -8,7 +8,7 @@
         xmlns:viewModel="clr-namespace:FileContentSearch.ViewModel"
         Title="{Binding Title}"
         MinWidth="800"
-        MinHeight="600"
+        MinHeight="500"
         d:DataContext="{d:DesignInstance d:Type=viewModel:MainViewModel,
                                          IsDesignTimeCreatable=True}"
         lex:LocalizeDictionary.DesignCulture="en"
@@ -326,23 +326,23 @@
                 <ItemsPanelTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
 
-            <StatusBarItem Grid.Column="0">
-                <ProgressBar Width="200"
-                             Height="16"
+            <StatusBarItem Grid.Column="0" HorizontalContentAlignment="Stretch">
+                <ProgressBar Height="16"
+                             Margin="1,0,4,0"
                              Maximum="1"
                              Minimum="0"
                              Value="{Binding AppStateViewModel.Progress, Mode=OneWay}" />
             </StatusBarItem>
 
             <StatusBarItem Grid.Column="1">
-                <TextBlock Margin="8,0,0,0" Text="{Binding AppStateViewModel.FileCountStatus}" />
+                <TextBlock Margin="4,0,0,0" Text="{Binding AppStateViewModel.FileCountStatus}" />
             </StatusBarItem>
 
         </StatusBar>
