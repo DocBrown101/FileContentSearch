@@ -10,12 +10,12 @@ The following is required to compile:
 
 - Using [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
   - Make sure you have the latest version installed
-  - Make sure you have [SDK .NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0) installed
+  - Make sure you have [SDK .NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0) installed
 
 ## PowerShell Build
 
 __Requirements__
-- [SDK .NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
+- [SDK .NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0)
 
 __Steps__
 1. Download the branch as .zip archiv
