@@ -7,6 +7,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using Services.FileTypeBasedTextExtraction;
 
     public class FileContentSearchService
     {
@@ -75,17 +76,22 @@
         {
             var stringComparison = upperLowerCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
 
-            return fileInfo.Extension.Contains(".docx", StringComparison.OrdinalIgnoreCase)
-                ? ExistsTextInDocxFile(fileInfo, searchTags, stringComparison)
-                : ExistsTextInTextFile(fileInfo, searchTags, stringComparison, cancellationToken);
+            return string.IsNullOrEmpty(fileInfo.Extension)
+                ? ExistsTextInTextFile(fileInfo, searchTags, stringComparison, cancellationToken)
+                : fileInfo.Extension.ToUpper() switch
+                {
+                    ".DOCX" => ExistsTextInFile(fileInfo, searchTags, stringComparison, new DocxToTextService()),
+                    ".PDF" => ExistsTextInFile(fileInfo, searchTags, stringComparison, new PdfToTextService()),
+                    _ => ExistsTextInTextFile(fileInfo, searchTags, stringComparison, cancellationToken),
+                };
         }
 
-        private static bool? ExistsTextInDocxFile(FileInfo fileInfo, ICollection<string> searchTags, StringComparison stringComparison)
+        private static bool? ExistsTextInFile(FileInfo fileInfo, ICollection<string> searchTags, StringComparison stringComparison, ITextExtraction textExtraction)
         {
             try
             {
-                var docxText = new DocxToTextService().ExtractText(fileInfo.FullName);
-
+                var docxText = textExtraction.ExtractText(fileInfo.FullName);
+                
                 foreach (var searchTag in searchTags)
                 {
                     if (docxText.IndexOf(searchTag, stringComparison) <= -1)
