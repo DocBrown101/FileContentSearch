@@ -10,7 +10,7 @@
     public class FileSearchService
     {
         private readonly Action<int> fileCountChangedAction;
-        private readonly SynchronizationContext context;
+        private readonly SynchronizationContext? context;
 
         private DateTime lastUpdatDateTime;
 
@@ -97,7 +97,7 @@
 
         private void NotifyFileCountChangedAction(int fileCount)
         {
-            this.context.Post(state => { this.fileCountChangedAction(fileCount); }, null);
+            this.context?.Post(state => { this.fileCountChangedAction(fileCount); }, null);
         }
 
         private static bool CanRead(string folderPath)

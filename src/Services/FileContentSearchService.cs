@@ -11,11 +11,11 @@
 
     public class FileContentSearchService
     {
-        private readonly Action<FileContentSearchResult, int> fileContentSearchResultAction;
+        private readonly Action<FileContentSearchResult?, int> fileContentSearchResultAction;
         private readonly ILocalizationService localizationService;
-        private readonly SynchronizationContext synchronizationContext;
+        private readonly SynchronizationContext? synchronizationContext;
 
-        public FileContentSearchService(Action<FileContentSearchResult, int> fileContentSearchResultAction, ILocalizationService localizationService)
+        public FileContentSearchService(Action<FileContentSearchResult?, int> fileContentSearchResultAction, ILocalizationService localizationService)
         {
             this.fileContentSearchResultAction = fileContentSearchResultAction;
             this.localizationService = localizationService;
@@ -193,9 +193,9 @@
             return detectedEncoding;
         }
 
-        private void NotifyResultAction(FileContentSearchResult searchTextResult, int fileCount)
+        private void NotifyResultAction(FileContentSearchResult? searchTextResult, int fileCount)
         {
-            this.synchronizationContext.Post(state => { this.fileContentSearchResultAction(searchTextResult, fileCount); }, null);
+            this.synchronizationContext?.Post(state => { this.fileContentSearchResultAction(searchTextResult, fileCount); }, null);
         }
     }
 }

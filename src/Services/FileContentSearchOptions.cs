@@ -19,7 +19,7 @@
             bool excludSubdirectoryNames,
             ICollection<string> excludedSubdirectoryNames)
         {
-            this.SearchPath = searchPath?.Trim();
+            this.SearchPath = searchPath.Trim();
             this.SearchTags = searchTags;
             this.localizationService = localizationService;
             this.messageBoxService = messageBoxService;
