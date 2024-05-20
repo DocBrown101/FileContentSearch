@@ -7,7 +7,7 @@
     // Convert an integer percentage (0 to 100) to a double between (0.0d and 1.0d)
     public class IntPercentageToDoubleConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             var res = 0.0d;
             if (value is int intVal)
@@ -27,7 +27,7 @@
             return res;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return null;
         }

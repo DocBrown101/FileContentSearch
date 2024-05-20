@@ -12,7 +12,7 @@
         private SolidColorBrush commandTextColor = new SolidColorBrush(Colors.Green);
 
         private int searchProgressValue;
-        private string fileCountStatus;
+        private string fileCountStatus = string.Empty;
         private bool isBusy;
         private double progress;
 
@@ -64,7 +64,7 @@
             this.Progress = (double)this.searchProgressValue++ / fileCount;
         }
 
-        private void ApplicationStateOnCurrentStateChanged(object sender, AppState.State state)
+        private void ApplicationStateOnCurrentStateChanged(object? sender, AppState.State state)
         {
             switch (state)
             {

@@ -7,7 +7,7 @@
     {
         private readonly SearchSettings searchSettings;
 
-        public string SearchPath
+        public string? SearchPath
         {
             get => this.searchSettings.SearchPath;
             set
@@ -19,7 +19,7 @@
             }
         }
 
-        public string SearchText1
+        public string? SearchText1
         {
             get => this.searchSettings.SearchText1;
             set
@@ -31,7 +31,7 @@
             }
         }
 
-        public string SearchText2
+        public string? SearchText2
         {
             get => this.searchSettings.SearchText2;
             set
@@ -43,7 +43,7 @@
             }
         }
 
-        public string FileExtensions
+        public string? FileExtensions
         {
             get => this.searchSettings.FileExtensions;
             set
@@ -55,7 +55,7 @@
             }
         }
 
-        public string ExcludedSubdirectoryName1
+        public string? ExcludedSubdirectoryName1
         {
             get => this.searchSettings.ExcludedSubdirectoryName1;
             set
@@ -67,7 +67,7 @@
             }
         }
 
-        public string ExcludedSubdirectoryName2
+        public string? ExcludedSubdirectoryName2
         {
             get => this.searchSettings.ExcludedSubdirectoryName2;
             set

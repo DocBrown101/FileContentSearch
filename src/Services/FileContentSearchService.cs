@@ -118,7 +118,7 @@
 
                 using (var streamReader = new StreamReader(fileInfo.FullName, encoding))
                 {
-                    string line;
+                    string? line;
                     while ((line = streamReader.ReadLine()) != null && !cancellationToken.IsCancellationRequested)
                     {
                         foreach (var searchTag in searchTags)

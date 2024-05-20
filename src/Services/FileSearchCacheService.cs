@@ -7,9 +7,14 @@
 
     public class FileSearchCacheService
     {
-        private FileContentSearchOptions cachedOptions;
+        private FileContentSearchOptions? cachedOptions;
 
         public ReadOnlyCollection<string> Files { get; private set; }
+
+        public FileSearchCacheService()
+        {
+            this.Files = new ReadOnlyCollection<string>([]);
+        }
 
         public void SetCache(List<string> filesCorrespondingToTheOptions, FileContentSearchOptions options)
         {

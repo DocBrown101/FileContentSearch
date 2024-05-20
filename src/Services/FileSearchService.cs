@@ -31,7 +31,7 @@
                                 },
                                 token).ConfigureAwait(false);
 
-            if (token.IsCancellationRequested) { return null; }
+            if (token.IsCancellationRequested) { return []; }
 
             this.NotifyFileCountChangedAction(files.Count);
 

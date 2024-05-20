@@ -5,7 +5,7 @@
 
     public class AppState : IDisposable
     {
-        private CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource? cancellationTokenSource;
         private State currentState;
         private bool isDisposed;
 
@@ -14,7 +14,7 @@
             this.CurrentState = State.Idle;
         }
 
-        public event EventHandler<State> CurrentStateChanged;
+        public event EventHandler<State>? CurrentStateChanged;
 
         public enum State
         {
@@ -71,7 +71,7 @@
 
             if (disposing)
             {
-                this.cancellationTokenSource.Dispose();
+                this.cancellationTokenSource?.Dispose();
             }
 
             this.isDisposed = true;

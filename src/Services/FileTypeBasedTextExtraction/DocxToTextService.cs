@@ -45,7 +45,7 @@
 
                 var xmlNamespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
                 xmlNamespaceManager.AddNamespace("w", WordprocessingMlNamespace);
-                var xmlNode = xmlDocument.DocumentElement.SelectSingleNode(BodyXPath, xmlNamespaceManager);
+                var xmlNode = xmlDocument.DocumentElement?.SelectSingleNode(BodyXPath, xmlNamespaceManager);
 
                 stringBuilder.Append(this.ReadTextFromNodeRecursive(xmlNode));
             }
@@ -57,7 +57,7 @@
             return stringBuilder.ToString();
         }
 
-        private string ReadTextFromNodeRecursive(XmlNode xmlNode)
+        private string ReadTextFromNodeRecursive(XmlNode? xmlNode)
         {
             if (xmlNode == null || xmlNode.NodeType != XmlNodeType.Element)
             {

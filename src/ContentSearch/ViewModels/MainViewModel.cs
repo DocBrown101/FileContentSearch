@@ -98,11 +98,14 @@ public class MainViewModel : ViewModelBase
 
     private void OpenCurrentDirectory()
     {
-        var directoryInfo = new DirectoryInfo(this.SearchSettings.SearchPath);
-
-        if (directoryInfo.Exists)
+        if (this.SearchSettings.SearchPath != null)
         {
-            Process.Start("explorer", directoryInfo.FullName);
+            var directoryInfo = new DirectoryInfo(this.SearchSettings.SearchPath);
+
+            if (directoryInfo.Exists)
+            {
+                Process.Start("explorer", directoryInfo.FullName);
+            }
         }
     }
 
@@ -254,7 +257,7 @@ public class MainViewModel : ViewModelBase
         return excludedSubdirectoryNames;
     }
 
-    private void AddFileContentSearchResults(FileContentSearchResult searchTextResult, int fileCount)
+    private void AddFileContentSearchResults(FileContentSearchResult? searchTextResult, int fileCount)
     {
         if (searchTextResult != null)
         {

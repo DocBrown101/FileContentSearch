@@ -11,15 +11,15 @@
 
         public FileContentSearchOptions(ILocalizationService localizationService,
             IMessageBoxService messageBoxService,
-            string searchPath,
+            string? searchPath,
             ICollection<string> searchTags,
             bool checkUpperLowerCase,
             bool checkAllFiles,
-            string fileExtensions,
+            string? fileExtensions,
             bool excludSubdirectoryNames,
             ICollection<string> excludedSubdirectoryNames)
         {
-            this.SearchPath = searchPath.Trim();
+            this.SearchPath = searchPath == null ? string.Empty : searchPath.Trim();
             this.SearchTags = searchTags;
             this.localizationService = localizationService;
             this.messageBoxService = messageBoxService;

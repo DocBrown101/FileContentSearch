@@ -81,7 +81,7 @@ dotnet publish "$PSScriptRoot\src\$Project\$Project.csproj" `
 	   --nologo
 
 # Archiv Build
-Compress-Archive -Path "$BuildPathLinuxX64\$Project" -DestinationPath $ArchiveLinuxX64
-Compress-Archive -Path "$BuildPathLinuxARM64\$Project" -DestinationPath $ArchiveLinuxARM64
-Compress-Archive -Path "$BuildPathWindowsX64\$Project.exe" -DestinationPath $ArchiveWindowsX64
-Compress-Archive -Path "$BuildPathWindowsARM64\$Project.exe" -DestinationPath $ArchiveWindowsARM64
+Compress-Archive -Path "$BuildPathLinuxX64\File-Content-Search" -DestinationPath $ArchiveLinuxX64
+Compress-Archive -Path "$BuildPathLinuxARM64\File-Content-Search" -DestinationPath $ArchiveLinuxARM64
+Compress-Archive -Path "$BuildPathWindowsX64\File-Content-Search.exe" -DestinationPath $ArchiveWindowsX64
+Compress-Archive -Path "$BuildPathWindowsARM64\File-Content-Search.exe" -DestinationPath $ArchiveWindowsARM64
