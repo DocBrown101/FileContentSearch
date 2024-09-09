@@ -12,8 +12,8 @@
 
     <ItemGroup>
         <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
-        <PackageReference Include="itext7" Version="8.0.4" />
-        <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.4" />
+        <PackageReference Include="itext7" Version="8.0.5" />
+        <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.5" />
     </ItemGroup>
 
 </Project>
