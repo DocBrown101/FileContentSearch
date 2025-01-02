@@ -23,7 +23,7 @@
                 }
                 else
                 {
-                    _ = Process.Start("xdg-open", fileOrDirectoryName!);
+                    _ = Process.Start("xdg-open", $"\"{fileOrDirectoryName}\"");
                 }
             }
         }
